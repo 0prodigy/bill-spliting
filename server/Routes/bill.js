@@ -1,5 +1,5 @@
 const express = require("express");
-const { splitBill } = require("../Controller/billControler");
+const { splitBill } = require("../controllers/bill-controller");
 const router = express.Router();
 
 router.post("/split", splitBill);

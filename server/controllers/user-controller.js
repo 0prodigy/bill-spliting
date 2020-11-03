@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const User = require("../Model/User");
+const User = require("../models/User");
 const { v4: uuid } = require("uuid");
 
 const addUser = async (req, res) => {
