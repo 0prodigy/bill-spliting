@@ -2,13 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  background: #028a02;
-  color: #fff;
-  max-width: 330px;
+  background: #00a371;
+  color: #e6f4ef;
+  width: 350px;
+  height: 300px;
   padding: 10px;
+  margin-bottom: 20px;
   text-align: center;
   border-radius: 30px;
-  box-shadow: -2px 0px 5px #2a3824;
+  box-shadow: 1px 10px 5px #86b1a4;
   .user-card {
     padding: 10px;
     .img-container img {
@@ -23,14 +25,16 @@ const Wrapper = styled.div`
     }
   }
   .amount-card {
-    display: felx;
+    display: flex;
     justify-content: space-around;
     color: #333;
-    font-size: 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
 
     span {
-      font-size: 15px;
+      font-size: 13px;
       color: #fcfbfc;
+      font-weight: 100;
     }
   }
 `;
