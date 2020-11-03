@@ -1,0 +1,11 @@
+POST http://localhost:5000/api/bills/split 
+Content-Type: application/json
+
+{
+    "bill":{
+        "Akash":500,
+        "Vikash":600,
+        "Prakash":5000
+    },
+    "userId":1
+}
