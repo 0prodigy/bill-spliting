@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
-const User = require("./Model/User");
 const billRouter = require("./Routes/bill");
+const userRouter = require("./Routes/user");
 
 dotenv.config();
 
@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/bills", billRouter);
+app.use("/api/user", userRouter);
 
 mongoose.connect(
   process.env.MONGO_DB_URI,
