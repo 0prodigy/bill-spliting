@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { getHistory, split } from "../Redux/actions";
 
 const Wrapper = styled.div`
   background: #fff;
@@ -47,6 +49,11 @@ const Wrapper = styled.div`
     }
   }
 
+  form {
+    width: 430px;
+    margin: 0 auto;
+  }
+
   .btn-split {
     padding: 15px 60px;
     display: block;
@@ -61,8 +68,11 @@ const Wrapper = styled.div`
   }
 `;
 function Form() {
-  const [users, setUsers] = useState([{ name: "", amount: "" }]);
+  const [users, setUsers] = useState([{ name: "Akash", amount: "" }]);
   const [total, setTotal] = useState("");
+  const [note, setNote] = useState("");
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
 
   const handleAddFields = () => {
     const values = [...users];
@@ -89,13 +99,33 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("users", users);
+    let bill = {};
+    for (let i = 0; i < users.length; i++) {
+      bill[users[i]["name"]] = parseInt(users[i]["amount"]);
+    }
+
+    //static id for user
+    let data = {
+      userId: "1432f36c-0fbb-4f4e-a2db-b4c01b26b5bc",
+      bill: bill,
+      note: note,
+      totalAmount: total,
+    };
+
+    dispatch(split(data));
+
+    setUsers([{ name: "Akash", amount: "" }]);
+    setTotal("");
+    setNote("");
   };
 
   return (
     <Wrapper>
       <h1>Split Bill</h1>
       <form onSubmit={handleSubmit}>
+        {state.errMsg && state.errMsg}
+        {state.successMsg && state.successMsg}
+
         <div className="total-amount">
           <input
             type="text"
@@ -139,6 +169,14 @@ function Form() {
               </div>
             </div>
           ))}
+        </div>
+        <div className="total-amount">
+          <input
+            type="text"
+            placeholder="Note"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+          />
         </div>
         <div>
           <button type="submit" className="btn-split" onSubmit={handleSubmit}>

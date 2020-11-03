@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { getHistory } from "../Redux/actions";
 import Form from "./Form";
 import Trasactions from "./Trasactions";
 import Wallet from "./Wallet";
+import Debt from "./Debt";
 
 const Wrapper = styled.div`
   background: #f6f7fb;
@@ -23,22 +26,26 @@ const Wrapper = styled.div`
   }
 `;
 function Dashboard() {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(getHistory());
+    //eslint ignore next-line
+  }, []);
   return (
     <Wrapper>
       <div>
         <Wallet />
         <h3>Your Debt</h3>
-        <Trasactions />
+        {state.bills.length > 0 &&
+          state.bills[0].map((item, i) => <Debt key={i} data={item} />)}
       </div>
       <Form />
       <div>
         <h3>History</h3>
-        <Trasactions />
-        <Trasactions />
-        <Trasactions />
-        <Trasactions />
-        <Trasactions />
-        <Trasactions />
+        {state.bills.length > 0 &&
+          state.bills[0].map((item, i) => <Trasactions key={i} data={item} />)}
       </div>
     </Wrapper>
   );

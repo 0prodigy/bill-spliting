@@ -22,14 +22,14 @@ const Wrapper = styled.div`
   margin-bottom: 4px;
 `;
 
-function Trasactions(props) {
+function Debt(props) {
   const { note, bill } = props.data;
   return (
     <div>
       {bill &&
         bill.map(
           (item, i) =>
-            item.name !== "Akash" && (
+            item.from === "Akash" && (
               <Wrapper key={i}>
                 <div className="row">
                   <div className="img-container">
@@ -39,8 +39,8 @@ function Trasactions(props) {
                     />
                   </div>
                   <div className="content">
-                    <p>{`${item.from} owe ${item.amount} to ${item.to} for ${note} `}</p>
-                    <span>03 Nov</span>
+                    <p>{`You owe ${item.amount} to ${item.to} for ${note} `}</p>
+                    <span>02 Nov</span>
                   </div>
                 </div>
               </Wrapper>
@@ -50,4 +50,4 @@ function Trasactions(props) {
   );
 }
 
-export default Trasactions;
+export default Debt;
