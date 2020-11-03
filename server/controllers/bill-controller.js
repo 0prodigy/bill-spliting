@@ -1,4 +1,4 @@
-const User = require("../Model/User");
+const User = require("../models/User");
 
 const calculateBillSplit = (bill) => {
   const people = Object.keys(bill);
@@ -22,10 +22,9 @@ const calculateBillSplit = (bill) => {
     sortedAmount[j] -= owe;
 
     splitedBill.push({
-      [sortedPeople[i]]: {
-        to: sortedPeople[j],
-        amount: owe.toFixed(2),
-      },
+      from: sortedPeople[i],
+      to: sortedPeople[j],
+      amount: owe.toFixed(2),
     });
 
     if (sortedAmount[i] === 0) {
@@ -40,13 +39,17 @@ const calculateBillSplit = (bill) => {
 };
 
 const splitBill = async (req, res) => {
-  const { bill, userId } = req.body;
+  const { bill, userId, note, totalAmount } = req.body;
 
   try {
     let user = await User.findOne({ id: userId });
     if (user) {
       const calculatedBill = calculateBillSplit(bill);
-      user.history.unshift({ calculatedBill });
+      user.history.unshift({
+        note: note,
+        totalAmount: totalAmount,
+        bill: calculatedBill,
+      });
       await user.save();
       return res.status(200).json({
         err: false,

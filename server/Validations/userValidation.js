@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const addUserValidation = [
   body("name")
@@ -6,4 +6,10 @@ const addUserValidation = [
     .withMessage("Ohh!! you forgot to tell us your name"),
 ];
 
-module.exports = { addUserValidation };
+const getHistoryValidation = [
+  param("id")
+    .exists({ checkNull: true, checkFalsy: true })
+    .withMessage("user id is required"),
+];
+
+module.exports = { addUserValidation, getHistoryValidation };
